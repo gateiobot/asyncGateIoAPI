@@ -5,7 +5,12 @@
 
 1.2 修改gateSellStartUpCoin.py文件中 account_names = ["优质稳健交易员", "大牛哥哥"] 这句代码中的账户名，可添加多个，中间逗号隔开
 
+2. **更多项目持续开发中，欢迎关注**
 
+4. **交流群**
+微信：niuth666
+telegram：https://t.me/benbenniu666
+telegram 群：https://t.me/+F043vqd_V5c5MjFl
 
 ### 通过以下邀请链接注册，将享受高额的手续费返佣
 

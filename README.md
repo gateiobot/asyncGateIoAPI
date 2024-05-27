@@ -9,7 +9,7 @@
 
 3. **交流群**
 
-   [微信：niuth666
+   微信：niuth666
    
    telegram：https://t.me/benbenniu666
    

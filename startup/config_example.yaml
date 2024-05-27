@@ -4,7 +4,7 @@ accounts:
     secret: "YOUR_GATEIO_SECRET" # 请填写自己的secret
   大牛哥哥: # 请填写自己的账户名
     key: "YOUR_GATEIO_KEY" # 请填写自己的key
-    secret: "YOUR_GATEIO_KEY"
+    secret: "YOUR_GATEIO_KEY" # 请填写自己的secret
 header_name: 'X-Gate-Channel-Id'
 header_value: 'daniugege'
 proxy: "http://127.0.0.1:xxxxx/" #请填写你的代理地址

@@ -1,11 +1,5 @@
-# -*- coding:utf-8 -*-
-
 """
-Log printer.
 
-Author: HuangTao
-Date:   2018/04/08
-Email:  huangtao@ifclover.com
 """
 
 import os

@@ -2,7 +2,7 @@ import asyncio
 from restapi import SpotClient
 
 async def main():
-    spot_client = SpotClient(apikey='79235c0dcfbf88d63e5ddc15071fa888', apisecret='dc852df651aa5ee8b03c0efdbea9889b6ded7d6facf80653ebd10b118fb17def')
+    spot_client = SpotClient(apikey='XXXXXXX', apisecret='XXXXXX')
     # Get list of currencies
     # currencies ,error= await spot_client.get_currencies()
     # print("Currencies:", currencies)

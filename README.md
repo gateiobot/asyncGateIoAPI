@@ -9,11 +9,17 @@
 
 3. **交流群**
 
-   微信：niuth666
+   QQ:2926888267
    
-   telegram：https://t.me/benbenniu666
+   qq群: 649390535
    
-   telegram 群：https://t.me/+F043vqd_V5c5MjFl]()
+   微信：daniugege6
+   
+   电报：https://t.me/benbenniu666
+   
+   电报群：https://t.me/daniuzhandui
+   
+   推特：https://twitter.com/daniugelaile
 
 ### 通过以下邀请链接注册，将享受高额的手续费返佣
 

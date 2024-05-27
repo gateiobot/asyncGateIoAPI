@@ -84,17 +84,17 @@ class StartUpCoinTradeBot:
                                 "side": "sell",
                                 "amount": sell_amount,
                             }
-                            created_order, error = self.spot.create_order(order)
+                            created_order, error = await self.spot.create_order(order)
                             if created_order:
                                 while True:
-                                    order_status, error = self.spot.get_order_details(created_order.id,currency_pair)
+                                    order_status, error = await self.spot.get_order_details(created_order.id,currency_pair)
                                     if order_status.status == 'closed':
                                         logger.info(
                                             f"订单全部成交： 交易对 {created_order.currency_pair}, 状态： {order_status.status}")
                                         break
                                     elif order_status.status == 'cancelled':
                                         logger.info(f"订单被取消，重新下单")
-                                        created_order, error = self.spot.create_order(order)
+                                        created_order, error = await self.spot.create_order(order)
                                     await asyncio.sleep(1)  # 检查订单状态的间隔
                 self.new_coins_queue.task_done()
             except Exception as e:

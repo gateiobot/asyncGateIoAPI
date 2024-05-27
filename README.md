@@ -1,16 +1,19 @@
 ## 项目
 1. **gateio 交易所新币多账号出货**
 
-1.1 更改配置文件config_example.yaml名称为config.yaml ,填写你的key、sercet和代理地址proxy
-
-1.2 修改gateSellStartUpCoin.py文件中 account_names = ["优质稳健交易员", "大牛哥哥"] 这句代码中的账户名，可添加多个，中间逗号隔开
+   1.1 更改配置文件config_example.yaml名称为config.yaml ,填写你的key、sercet和代理地址proxy
+   
+   1.2 修改gateSellStartUpCoin.py文件中 account_names = ["优质稳健交易员", "大牛哥哥"] 这句代码中的账户名，可添加多个，中间逗号隔开
 
 2. **更多项目持续开发中，欢迎关注**
 
-4. **交流群**
-微信：niuth666
-telegram：https://t.me/benbenniu666
-telegram 群：https://t.me/+F043vqd_V5c5MjFl
+3. **交流群**
+
+   [微信：niuth666
+   
+   telegram：https://t.me/benbenniu666
+   
+   telegram 群：https://t.me/+F043vqd_V5c5MjFl]()
 
 ### 通过以下邀请链接注册，将享受高额的手续费返佣
 

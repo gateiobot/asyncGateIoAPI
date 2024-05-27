@@ -1,7 +1,9 @@
 ## 项目
-1. gateio 交易所新币多账号出货
+1. **gateio 交易所新币多账号出货**
+
 1.1 修改配置文件config.yaml ,填写你的key、sercet和代理地址proxy
-1.2 修改gateSellStartUpCoin.py文件中 account_names = ["优质稳健交易员", "大牛哥哥"] 这句代码中的名称，可添加多个，，中间逗号隔开
+
+1.2 修改gateSellStartUpCoin.py文件中 account_names = ["优质稳健交易员", "大牛哥哥"] 这句代码中的账户名，可添加多个，中间逗号隔开
 
 
 

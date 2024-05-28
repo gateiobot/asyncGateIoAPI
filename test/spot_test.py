@@ -30,9 +30,13 @@ qq群: 649390535
 
 import asyncio
 from restapi import SpotClient
+from utils.config import config
 
+account_name = '优质稳健交易员'
+apikey = config['accounts'][account_name]["key"]
+apiSecret = config['accounts'][account_name]["secret"]
 async def main():
-    spot_client = SpotClient(apikey='XXXXXXX', apisecret='XXXXXX')
+    spot_client = SpotClient(apikey=apikey, apisecret=apiSecret)
     # Get list of currencies
     # currencies ,error= await spot_client.get_currencies()
     # print("Currencies:", currencies)
@@ -49,6 +53,8 @@ async def main():
 
     # open_orders, error = await spot_client.get_open_orders()
     # print("open_orders:", open_orders)
+
+
 
 
 asyncio.run(main())

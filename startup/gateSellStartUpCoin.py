@@ -105,12 +105,12 @@ class StartUpCoinTradeBot:
                         base_currency = coin.get('base')
                         currency_pair = coin.get('id')
                         base_currency_amount_info, error = await self.spot.get_spot_accounts(currency=base_currency)
-                        if base_currency_amount_info:
-                            sell_amount = base_currency_amount_info[0]['available']
+                        if base_currency_amount_info and isinstance(base_currency_amount_info, list) and base_currency_amount_info:
+                            sell_amount = base_currency_amount_info[0].get('available', 0)
                             # 获取当前市场价格
                             market_info, error = await self.spot.get_tickers(currency_pair)
-                            if market_info:
-                                current_price = float(market_info['last'])
+                            if market_info and isinstance(market_info, dict):
+                                current_price = float(market_info.get('last', 0))
                                 # 计算交易金额是否满足最小限制
                                 if current_price * sell_amount < 1:
                                     logger.info(f"交易金额不满足最小限制1 USDT，跳过交易：{currency_pair}")
@@ -133,10 +133,11 @@ class StartUpCoinTradeBot:
                                             logger.info(f"订单被取消，重新下单")
                                             created_order, error = await self.spot.create_order(order)
                                         await asyncio.sleep(1)  # 检查订单状态的间隔
-                self.new_coins_queue.task_done()
             except Exception as e:
                 logger.error(f"处理新币时发生错误: {e}")
-            await asyncio.sleep(1)
+                self.new_coins_queue.task_done()
+            finally:
+                await asyncio.sleep(1)
 
 
 if __name__ == "__main__":

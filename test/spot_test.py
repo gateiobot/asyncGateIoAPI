@@ -29,9 +29,11 @@ qq群: 649390535
 """
 
 import asyncio
+import json
+
 from restapi import SpotClient
 from utils.config import config
-
+from decimal import Decimal as D
 account_name = '优质稳健交易员'
 apikey = config['accounts'][account_name]["key"]
 apiSecret = config['accounts'][account_name]["secret"]
@@ -47,10 +49,46 @@ async def main():
     # currency_pairs ,error= await spot_client.get_currency_pairs()
     # print("Currency Pairs:", currency_pairs)
     # Add more method calls as needed
+    base_currency  = 'BTC'
+    currency_pair = 'BTC_USDT'
+    base_currency_amount_info, error = await spot_client.get_spot_accounts(currency=base_currency)
+    print("accounts:", base_currency_amount_info)
+    if base_currency_amount_info and isinstance(base_currency_amount_info, list):
+        sell_amount = base_currency_amount_info[0].get('available', 0)
+        print(sell_amount)
+        market_info, error = await spot_client.get_tickers(currency_pair)
+        print("market_info:", market_info)
+        if market_info and isinstance(market_info, list):
+            current_price = market_info[0].get('last', 0)
+            print(current_price)
 
-    accounts, error = await spot_client.get_spot_accounts(currency='BTC')
-    print("accounts:", accounts)
 
+            if D(current_price) * D(sell_amount) < 1:
+                print(f"交易金额不满足最小限制1 USDT，跳过交易：{currency_pair}")
+
+            order = {
+                "currency_pair": currency_pair,
+                "type": "limit",
+                "side": "buy",
+                "price": "54000",
+                "amount": '0.001',
+            }
+
+            created_order, error = await spot_client.create_order(order)
+            print(created_order)
+            if created_order:
+                while True:
+                    order_status, error = await spot_client.get_order_details(created_order['id'], currency_pair)
+                    if order_status['status'] == 'open':
+                        cancel_order,error = await spot_client.cancel_order(created_order['id'], currency_pair)
+                        # 由于是市价，重新挂单
+                        created_order, error = await spot_client.create_order(order)
+                    elif order_status['status'] == 'closed':
+                        print(
+                            f"订单全部成交： 交易对 {created_order['currency_pair']}, 状态： {order_status['status']}")
+                        break
+
+                    await asyncio.sleep(1)  # 检查订单状态的间隔
     # open_orders, error = await spot_client.get_open_orders()
     # print("open_orders:", open_orders)
 

@@ -27,6 +27,7 @@ qq群: 649390535
 电报群：https://t.me/daniuzhandui
 推特：https://twitter.com/daniugelaile
 """
+import json
 from typing import Optional, Dict, Any, List
 from .BaseClient import GateIoBaseClient
 from .constants import *
@@ -191,7 +192,8 @@ class SpotClient(GateIoBaseClient):
     
     async def create_order(self, order: Dict[str, Any]):
         url = "/spot/orders"
-        success, error = await self._request("POST", url, data=order, is_auth_required=True)
+        data =  json.dumps(order)
+        success, error = await self._request("POST", url, data=data, is_auth_required=True)
         return success, error
     
     async def get_orders(self, currency_pair: str, status: str, page: int = None, limit: int = None, account: str = None, from_time: int = None, to_time: int = None, side: str = None):

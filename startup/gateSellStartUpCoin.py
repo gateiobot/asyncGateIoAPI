@@ -36,6 +36,7 @@ from httpx import AsyncClient
 from restapi import SpotClient, logger
 from utils import config
 from utils.config import config
+from decimal import Decimal as D
 
 
 class StartUpCoinMonitor:
@@ -104,35 +105,39 @@ class StartUpCoinTradeBot:
                     if (start_trade_time - time.time()) <= 0:
                         base_currency = coin.get('base')
                         currency_pair = coin.get('id')
-                        base_currency_amount_info, error = await self.spot.get_spot_accounts(currency=base_currency)
-                        if base_currency_amount_info and isinstance(base_currency_amount_info, list) and base_currency_amount_info:
-                            sell_amount = base_currency_amount_info[0].get('available', 0)
-                            # 获取当前市场价格
-                            market_info, error = await self.spot.get_tickers(currency_pair)
-                            if market_info and isinstance(market_info, dict):
-                                current_price = float(market_info.get('last', 0))
-                                # 计算交易金额是否满足最小限制
-                                if current_price * sell_amount < 1:
-                                    logger.info(f"交易金额不满足最小限制1 USDT，跳过交易：{currency_pair}")
-                                    continue
-                                order = {
-                                    "currency_pair": currency_pair,
-                                    "type": "market",
-                                    "side": "sell",
-                                    "amount": sell_amount,
-                                }
-                                created_order, error = await self.spot.create_order(order)
-                                if created_order:
-                                    while True:
-                                        order_status, error = await self.spot.get_order_details(created_order.id,currency_pair)
-                                        if order_status.status == 'closed':
-                                            logger.info(
-                                                f"订单全部成交： 交易对 {created_order.currency_pair}, 状态： {order_status.status}")
-                                            break
-                                        elif order_status.status == 'cancelled':
-                                            logger.info(f"订单被取消，重新下单")
+                        while True:
+                            base_currency_amount_info, error = await self.spot.get_spot_accounts(currency=base_currency)
+                            if base_currency_amount_info and isinstance(base_currency_amount_info, list):
+                                sell_amount = base_currency_amount_info[0].get('available', 0)
+                                # 获取当前市场价格
+                                market_info, error = await self.spot.get_tickers(currency_pair)
+                                if market_info and isinstance(market_info, list):
+                                    current_price = market_info[0].get('last', 0)
+                                    # 计算交易金额是否满足最小限制
+                                    if D(current_price) * D(sell_amount) < 1:
+                                        logger.info(f"交易金额不满足最小限制1 USDT，不交易 该新币：{currency_pair}，请提升VIP等级增加认购份额")
+                                        break
+                                    order = {
+                                        "currency_pair": currency_pair,
+                                        "type": "market",
+                                        "side": "sell",
+                                        "amount": sell_amount,
+                                    }
+                                    created_order, error = await self.spot.create_order(order)
+                                    if created_order:
+                                        order_status, error = await self.spot.get_order_details(created_order['id'],
+                                                                                                  currency_pair)
+                                        if order_status['status'] == 'open':
+                                            cancel_order, error = await self.spot.cancel_order(created_order['id'],
+                                                                                                 currency_pair)
+                                            await asyncio.sleep(1)
+                                            # 由于是市价，重新挂单
                                             created_order, error = await self.spot.create_order(order)
-                                        await asyncio.sleep(1)  # 检查订单状态的间隔
+                                        elif order_status['status'] == 'closed':
+                                            print(
+                                                f"订单全部成交： 交易对 {created_order['currency_pair']}, 状态： {order_status['status']}")
+                                            break
+                            await asyncio.sleep(1)  # 检查订单状态的间隔
             except Exception as e:
                 logger.error(f"处理新币时发生错误: {e}")
                 self.new_coins_queue.task_done()

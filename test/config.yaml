@@ -1,10 +1,10 @@
 accounts:
   优质稳健交易员:
-    key: "79235c0dcfbf88d63e5ddc15071fa888"
-    secret: "dc852df651aa5ee8b03c0efdbea9889b6ded7d6facf80653ebd10b118fb17def"
+    key: "xxxxx"
+    secret: "xxxxx"
   大牛哥哥:
-    key: "79b361733fac9bdab44f38ac0237381e"
-    secret: "9537879db1b8d7aeeaae6b69b8c9e747a2e7dd8a9040f269174297f818b501bd"
+    key: "xxxx"
+    secret: "xxxxx"
 header_name: 'X-Gate-Channel-Id'
 header_value: 'daniugege'
 proxy: "http://127.0.0.1:10809/"

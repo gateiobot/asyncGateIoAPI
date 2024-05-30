@@ -130,9 +130,7 @@ class StartUpCoinTradeBot:
                                         if order_status['status'] == 'open':
                                             cancel_order, error = await self.spot.cancel_order(created_order['id'],
                                                                                                  currency_pair)
-                                            await asyncio.sleep(1)
-                                            # 由于是市价，重新挂单
-                                            created_order, error = await self.spot.create_order(order)
+
                                         elif order_status['status'] == 'closed':
                                             print(
                                                 f"订单全部成交： 交易对 {created_order['currency_pair']}, 状态： {order_status['status']}")

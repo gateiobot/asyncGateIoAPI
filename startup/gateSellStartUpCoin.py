@@ -122,6 +122,7 @@ class StartUpCoinTradeBot:
                                         "type": "market",
                                         "side": "sell",
                                         "amount": sell_amount,
+                                        "time_in_force":"ioc"
                                     }
                                     created_order, error = await self.spot.create_order(order)
                                     if created_order:

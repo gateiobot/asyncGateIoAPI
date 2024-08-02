@@ -114,8 +114,8 @@ class StartUpCoinTradeBot:
                                 if market_info and isinstance(market_info, list):
                                     current_price = market_info[0].get('last', 0)
                                     # 计算交易金额是否满足最小限制
-                                    if D(current_price) * D(sell_amount) < 1:
-                                        logger.info(f"交易金额不满足最小限制1 USDT，不交易 该新币：{currency_pair}，请提升VIP等级增加认购份额")
+                                    if D(current_price) * D(sell_amount) < 3:
+                                        logger.info(f"账号:{self.account_name}  交易金额：{D(current_price) * D(sell_amount)}不满足最小限制3 USDT，不交易 该新币：{currency_pair}，请提升VIP等级增加认购份额")
                                         break
                                     order = {
                                         "currency_pair": currency_pair,
